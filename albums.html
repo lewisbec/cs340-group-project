@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Albums</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+
+
+<body>
+<h1>Albums</h1>
+
+[ <a href="genres.html">Genres</a> | <a href="artists.html">Artists</a> | <a href="songs.html">Songs</a> | <a href="customers.html">Customers</a> | <a href="playlists.html">Playlists</a> | <a href="albums.html">Albums</a>]
+
+<div id="browse">
+<table border="1" cellpadding="5">
+  <tr>
+    <th>albumId</th>
+    <th>title</th>
+    <th>description</th>
+    <th>artist</th>
+  </tr>
+  <tr>
+    <td align="right" >1</td>
+    <td >William</td>
+    <td align="right" >Adama</td>
+    <td align="right" >Adama</td>
+  </tr>
+  <tr>
+    <td align="right" >2</td>
+    <td>Lee</td>
+    <td align="right" >Adama</td>
+    <td align="right" >Adama</td>
+  </tr>
+  <tr>
+    <td align="right" >3</td>
+    <td>Laura</td>
+    <td align="right" >Roslin</td>
+    <td align="right" >Adama</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div>
+    <form method="POST">
+        <legend><strong>Add Album</strong></legend>
+          <fieldset class="fields">
+            <label> title </label> <input type="text">
+            <label> description </label> <input type="text">
+            <label> artist </label>
+            <select name="artist">
+            	  <option value="0">&nbsp;</option>
+                <option value="1">Gemenon</option>
+                <option value="2">Leonis</option>
+                <option value="3">Caprica</option>
+                </select>
+          </fieldset>
+          <input class="btn" type="submit" value="Add Album">
+	</form> 
+</div><!-- insert -->
+
+</body>
+</html>

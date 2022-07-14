@@ -1,0 +1,106 @@
+<html>
+<head>
+<title>Artists</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+
+
+<body>
+<h1>Playlists with Songs</h1>
+
+[ <a href="genres.html">Genres</a> | <a href="artists.html">Artists</a> | <a href="songs.html">Songs</a> | <a href="customers.html">Customers</a> | <a href="playlists.html">Playlists</a> ]
+
+<div id="browse">
+<table border="1" cellpadding="5">
+  <tr>
+    <th>playlistId</th>
+    <th>streams</th>
+    <th>name</th>
+    <th>description</th>
+    <th>song title</th>
+  </tr>
+  <tr>
+    <td align="right" >1</td>
+    <td >William</td>
+    <td align="right" >Adama</td>
+    <td align="right" >2</td>
+    <td>Lee</td>
+  </tr>
+  <tr>
+    <td align="right" >1</td>
+    <td >William</td>
+    <td align="right" >Adama</td>
+    <td align="right" >2</td>
+    <td>Lee</td>
+  </tr>
+  <tr>
+    <td align="right" >1</td>
+    <td >William</td>
+    <td align="right" >Adama</td>
+    <td align="right" >2</td>
+    <td>Lee</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div id="insert">
+    <form method="POST">
+        <legend><strong>Add New Playlist</strong></legend>
+          <fieldset class="fields">
+            <label> name</label> <input type="text" name="fname">
+            <label> description </label> <input type="text" name="lname">
+      </fieldset>
+          <input class="btn" type="submit" id="addGenre" value="Add Playlist">
+	</form> 
+</div><!-- insert -->
+
+<p>&nbsp;</p>
+<div id="insert">
+  <form method="POST">
+      <legend><strong>Add Song to Playlist</strong></legend>  
+      <fieldset class="fields">
+          <label>playlist</label>
+          <select name="playlist">
+            <option value="0">&nbsp;</option>
+            <option value="1">I like everything</option>
+            <option value="2">Everything... but country</option>
+            <option value="3">Take me home</option>
+          </select>          
+          <label> song </label>
+          <select name="song">
+            <option value="0">&nbsp;</option>
+            <option value="1">Right In</option>
+            <option value="2">Fire and Rain</option>
+            <option value="3">Bangarang</option>
+          </select>
+    </fieldset>
+        <input class="btn" type="submit" id="addGenre" value="Add Song">
+</form> 
+</div><!-- insert -->
+
+<p>&nbsp;</p>
+<div id="insert">
+  <form method="POST">
+      <legend><strong>Remove Song From Playlist</strong></legend>
+        <fieldset class="fields">       
+          <label> song </label>
+          <select name="song">
+            <option value="0">&nbsp;</option>
+            <option value="1">Right In</option>
+            <option value="2">Fire and Rain</option>
+            <option value="3">Bangarang</option>
+          </select>
+          <label>playlist</label>
+          <select name="playlist">
+            <option value="0">&nbsp;</option>
+            <option value="1">I like everything</option>
+            <option value="2">Everything... but country</option>
+            <option value="3">Take me home</option>
+          </select>   
+    </fieldset>
+        <input class="btn" type="submit" id="addGenre" value="Remove Song">
+</form> 
+</div><!-- insert -->
+
+</body>
+</html>
