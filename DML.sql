@@ -50,6 +50,9 @@ INSERT INTO Customers (Customers.username, Customers.password, Customers.email, 
 -- create a new Playlist
 INSERT INTO Playlists (Playlists.name, Playlists.description, Playlists.customerID) VALUES (:nameInput, :descriptionInput, :customerIDFromDropDown);
 
+-- add a song to a Playlist
+INSERT INTO Playlists_Songs (Playlists_Songs.playlistID, Playlists_Songs.songID) VALUES (:playlistInput, :songInput)
+
 -- UPDATE OPERATIONS
 -- update a customer
 UPDATE Customers
