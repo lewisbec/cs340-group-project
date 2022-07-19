@@ -49,3 +49,17 @@ INSERT INTO Customers (Customers.username, Customers.password, Customers.email, 
 
 -- create a new Playlist
 INSERT INTO Playlists (Playlists.name, Playlists.description, Playlists.customerID) VALUES (:nameInput, :descriptionInput, :customerIDFromDropDown);
+
+-- UPDATE OPERATIONS
+-- update a customer
+UPDATE Customers
+    SET username = :usernameInput, password = :passwordInput, email = :emailInput, isPremium = :isPremiumInput
+    WHERE customerID = :selectedCustomerID
+
+-- DELETE OPERATIONS
+-- delete a song from a playlist
+DELETE FROM Playlists_Songs WHERE
+    (
+        SELECT playlist_songID FROM Playlists_Songs
+        WHERE playlistID = :selectedPlaylist AND songID = :selectedSong
+    )
