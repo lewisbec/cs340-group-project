@@ -76,3 +76,8 @@ DELETE Playlists, Playlists_Songs
 FROM Playlists
 INNER JOIN Playlists_Songs ON Playlists.playlistID = Playlists_Songs.playlistID
 WHERE playlistID = :selectedPlaylist;
+
+-- set a genre in a song to be null
+UPDATE Songs
+    SET Songs.genreID = NULL
+    WHERE SongID = :selectedSongID
