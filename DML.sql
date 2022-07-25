@@ -71,10 +71,8 @@ DELETE FROM Playlists_Songs WHERE
         WHERE playlistID = :selectedPlaylist AND songID = :selectedSong
     );
 
--- delete an entire playlist from the Playlists table and all associated entries in the Playlists_Songs table
-DELETE Playlists, Playlists_Songs
-FROM Playlists
-INNER JOIN Playlists_Songs ON Playlists.playlistID = Playlists_Songs.playlistID
+-- delete an entire playlist from the Playlists table, all associated entries in the Playlists_Songs table should be deleted by CASCADE
+DELETE FROM Playlists
 WHERE playlistID = :selectedPlaylist;
 
 -- set a genre in a song to be null
