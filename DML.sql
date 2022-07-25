@@ -80,4 +80,4 @@ WHERE playlistID = :selectedPlaylist;
 -- set a genre in a song to be null
 UPDATE Songs
     SET Songs.genreID = NULL
-    WHERE SongID = :selectedSongID
+    WHERE Songs.songID = :selectedSongID
