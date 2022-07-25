@@ -55,13 +55,13 @@ INSERT INTO Customers (Customers.username, Customers.password, Customers.email, 
 INSERT INTO Playlists (Playlists.name, Playlists.description, Playlists.customerID) VALUES (:nameInput, :descriptionInput, :customerIDFromDropDown);
 
 -- add a song to a Playlist
-INSERT INTO Playlists_Songs (Playlists_Songs.playlistID, Playlists_Songs.songID) VALUES (:playlistInput, :songInput)
+INSERT INTO Playlists_Songs (Playlists_Songs.playlistID, Playlists_Songs.songID) VALUES (:playlistInput, :songInput);
 
 -- UPDATE OPERATIONS
 -- update a customer
 UPDATE Customers
     SET username = :usernameInput, password = :passwordInput, email = :emailInput, isPremium = :isPremiumInput
-    WHERE customerID = :selectedCustomerID
+    WHERE customerID = :selectedCustomerID;
 
 -- DELETE OPERATIONS
 -- delete a song from a playlist
@@ -69,4 +69,10 @@ DELETE FROM Playlists_Songs WHERE
     (
         SELECT playlist_songID FROM Playlists_Songs
         WHERE playlistID = :selectedPlaylist AND songID = :selectedSong
-    )
+    );
+
+-- delete an entire playlist from the Playlists table and all associated entries in the Playlists_Songs table
+DELETE Playlists, Playlists_Songs
+FROM Playlists
+INNER JOIN Playlists_Songs ON Playlists.playlistID = Playlists_Songs.playlistID
+WHERE playlistID = :selectedPlaylist;
