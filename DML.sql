@@ -31,6 +31,10 @@ SELECT Playlists.name, Playlists.streams, Playlists.description, Customers.usern
 INNER JOIN Playlists on Playlists_Songs.playlistID = Playlists.playlistID
 INNER JOIN Customers on Customers.customerID = Playlists.customerID;
 
+-- filter by playlist name
+SELECT Playlists.name, Playlists.streams, Playlists.description, Customers.username FROM Playlists_Songs
+WHERE Playlists.name = :playlistnamefilter;
+
 -- CREATE OPERATIONS
 -- create a new genre
 INSERT INTO Genres (Genres.genreID) VALUES (:genreIdInput);
