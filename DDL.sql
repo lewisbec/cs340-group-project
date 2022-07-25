@@ -105,7 +105,7 @@ DROP TABLE IF EXISTS `Genres`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Genres` (
-  `genreID` varchar(45) NOT NULL,
+  `genreID` varchar(45),
   PRIMARY KEY (`genreID`),
   UNIQUE KEY `genreID_UNIQUE` (`genreID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
