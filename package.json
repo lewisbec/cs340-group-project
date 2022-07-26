@@ -1,0 +1,19 @@
+{
+  "name": "dotify",
+  "version": "0.5.0",
+  "description": "a database-driven startup music streaming service",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lewisbec/cs340-group-project.git"
+  },
+  "author": "Beckett Lewis & Justin Canzonetta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lewisbec/cs340-group-project/issues"
+  },
+  "homepage": "https://github.com/lewisbec/cs340-group-project#readme"
+}
