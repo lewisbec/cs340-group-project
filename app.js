@@ -30,6 +30,13 @@ app.get('/', function(req, res)
         // })
     });
 
+app.get('/songs', function(req, res)
+    {
+        let query1 = "SELECT * FROM Songs;";
+        db.pool.query(query1, function(error, rows, fields){
+            res.render('songs', {data: rows});
+        })
+    });
 /*
     LISTENER
 */
