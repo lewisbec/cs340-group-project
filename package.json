@@ -18,6 +18,9 @@
   "homepage": "https://github.com/lewisbec/cs340-group-project#readme",
   "dependencies": {
     "express": "^4.18.1",
-    "forever": "^4.0.3"
+    "express-handlebars": "^6.0.6",
+    "forever": "^4.0.3",
+    "handlebars": "^4.7.7",
+    "mysql": "^2.18.1"
   }
 }
