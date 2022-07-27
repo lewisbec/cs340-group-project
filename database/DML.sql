@@ -15,7 +15,7 @@ Inner JOIN Artists ON Albums.albumID = Artists.artistID;
 
 -- songs
 -- get all songs, the corresponding artist, genre, and album
-SELECT Songs.songID, Songs.title, Songs.duration, Songs.streams, Albums.title as album, Artists.name as artist, Genres.genreID as genre FROM Songs
+SELECT Songs.songID, Songs.title, Songs.duration, Songs.numberOfStreams, Albums.title as album, Artists.name as artist, Genres.genreID as genre FROM Songs
 Inner Join Albums ON Albums.albumID = Songs.albumID
 INNER JOIN Artists ON Artists.artistID = Songs.artistID
 INNER JOIN Genres ON Genres.genreID = Songs.genreID;

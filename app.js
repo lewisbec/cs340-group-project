@@ -24,16 +24,14 @@ app.set('view engine', '.hbs');
 app.get('/', function(req, res)
     {
         res.render('index')
-        // let query1 = "SELECT * FROM Songs;";
-        // db.pool.query(query1, function(error, rows, fields){
-        //     res.render('index', {data: rows});
-        // })
     });
 
+// songs route
 app.get('/songs', function(req, res)
     {
-        let query1 = "SELECT * FROM Songs;";
+        let query1 = ("SELECT Songs.songID, Songs.title, Songs.duration, Songs.numberOfStreams, Albums.title as album, Artists.name as artist, Genres.genreID as genre FROM Songs Inner Join Albums ON Albums.albumID = Songs.albumID INNER JOIN Artists ON Artists.artistID = Songs.artistID INNER JOIN Genres ON Genres.genreID = Songs.genreID;")
         db.pool.query(query1, function(error, rows, fields){
+            console.log(rows)
             res.render('songs', {data: rows});
         })
     });
