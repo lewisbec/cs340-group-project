@@ -1,12 +1,12 @@
 {{!-- Just some plain text --}}
 
 <head>
-  <title>Songs</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>Songs</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
-  <h1>Songs</h1>
+<h1>Songs</h1>
 
-  [ <a href="genres.html">Genres</a> | <a href="artists.html">Artists</a> | <a href="songs.html">Songs</a> | <a
+[ <a href="genres.html">Genres</a> | <a href="artists.html">Artists</a> | <a href="songs.html">Songs</a> | <a
     href="customers.html">Customers</a> | <a href="playlists.html">Playlists</a>| <a href="albums.html">Albums</a> ]
 
 
@@ -46,3 +46,28 @@
         {{/each}}
     </tbody>
 </table>
+
+
+{{!-- Form to add a record to the table using standard HTML forms --}}
+<h2>Adding Data using an HTML form</h2>
+<p>To add a new song, please enter their information below and click `Submit`!</p>
+<form id="add-song-form" method="POST" action="/add-song-form">
+    <label for="input-title">Title: </label>
+    <input type="text" name="input-title" id="input-title-html">
+
+    <label for="input-duration">Duration </label>
+    <input type="text" name="input-duration" id="input-duration-html">
+
+    <label for="input-album">Album: </label>
+    <select name="input-album" id="input-album-html">
+        <option value="">Select an Album</option>
+        {{#each albums}}
+        <option value="{{this.albumID}}">{{this.title}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-age">Age: </label>
+    <input type="number" name="input-age" id="input-age-html">
+
+    <input type="submit">
+</form>
