@@ -30,7 +30,7 @@ CREATE TABLE `Albums` (
   PRIMARY KEY (`albumID`),
   UNIQUE KEY `albumID_UNIQUE` (`albumID`),
   KEY `fk_Albums_Artists1_idx` (`artistID`),
-  CONSTRAINT `fk_Albums_Artists1` FOREIGN KEY (`artistID`) REFERENCES `Artists` (`artistID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Albums_Artists1` FOREIGN KEY (`artistID`) REFERENCES `Artists` (`artistID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -137,7 +137,7 @@ CREATE TABLE `Playlists` (
   PRIMARY KEY (`playlistID`,`customerID`),
   UNIQUE KEY `playlistID_UNIQUE` (`playlistID`),
   KEY `fk_Playlists_Customers1_idx` (`customerID`),
-  CONSTRAINT `fk_Playlists_Customers1` FOREIGN KEY (`customerID`) REFERENCES `Customers` (`customerID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Playlists_Customers1` FOREIGN KEY (`customerID`) REFERENCES `Customers` (`customerID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -165,8 +165,8 @@ CREATE TABLE `Playlists_Songs` (
   PRIMARY KEY (`playlist_songID`),
   KEY `fk_Songs_has_Playlists_Playlists1_idx` (`playlistID`),
   KEY `fk_Songs_has_Playlists_Songs1_idx` (`songID`),
-  CONSTRAINT `fk_Songs_has_Playlists_Playlists1` FOREIGN KEY (`playlistID`) REFERENCES `Playlists` (`playlistID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Songs_has_Playlists_Songs1` FOREIGN KEY (`songID`) REFERENCES `Songs` (`songID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Songs_has_Playlists_Playlists1` FOREIGN KEY (`playlistID`) REFERENCES `Playlists` (`playlistID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_Songs_has_Playlists_Songs1` FOREIGN KEY (`songID`) REFERENCES `Songs` (`songID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -199,9 +199,9 @@ CREATE TABLE `Songs` (
   KEY `fk_Songs_Albums1_idx` (`albumID`),
   KEY `fk_Songs_Artists1_idx` (`artistID`),
   KEY `fk_Songs_Genres1_idx` (`genreID`),
-  CONSTRAINT `fk_Songs_Albums1` FOREIGN KEY (`albumID`) REFERENCES `Albums` (`albumID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Songs_Artists1` FOREIGN KEY (`artistID`) REFERENCES `Artists` (`artistID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Songs_Genres1` FOREIGN KEY (`genreID`) REFERENCES `Genres` (`genreID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Songs_Albums1` FOREIGN KEY (`albumID`) REFERENCES `Albums` (`albumID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_Songs_Artists1` FOREIGN KEY (`artistID`) REFERENCES `Artists` (`artistID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_Songs_Genres1` FOREIGN KEY (`genreID`) REFERENCES `Genres` (`genreID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

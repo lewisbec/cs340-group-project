@@ -55,7 +55,7 @@
     <label for="input-title">Title: </label>
     <input type="text" name="input-title" id="input-title-html">
 
-    <label for="input-duration">Duration </label>
+    <label for="input-duration">Duration: </label>
     <input type="text" name="input-duration" id="input-duration-html">
 
     <label for="input-album">Album: </label>
@@ -66,8 +66,21 @@
         {{/each}}
     </select>
 
-    <label for="input-age">Age: </label>
-    <input type="number" name="input-age" id="input-age-html">
+    <label for="input-artist">Artist</label>: </label>
+    <select name="input-artist" id="input-artist-html">
+        <option value="">Select an Artist</option>
+        {{#each artists}}
+        <option value="{{this.artistID}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-genre">Genre</label>:</label>
+    <select name="input-genre" id="input-genre">
+        <option value="">Select a Genre</option>
+        {{#each genres}}
+        <option value="{{this.genreID}}">{{this.genreID}}</option>
+        {{/each}}
+    </select>
 
     <input type="submit">
 </form>
