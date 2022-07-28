@@ -7,7 +7,7 @@ var express = require('express');
 var app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-PORT = 9022;
+PORT = 8676;
 
 // Database
 var db = require('./database/db-connector');
@@ -27,6 +27,13 @@ app.get('/', function (req, res) {
     res.render('index')
 });
 
+app.get('/playlists', function (req, res) {
+    let query1 = ("SELECT Playlists.playlistID, Playlists.numberOfStreams, Playlists.name, Playlists.description, Songs.title FROM Playlists INNER JOIN Playlists_Songs on Playlists_Songs.playlistID = Playlists.playlistID INNER JOIN Songs on Playlists_Songs.songID = Songs.songID;");
+
+    db.pool.query(query1, function (error, rows, fields) {
+        res.render('playlists', { data: rows });
+    })
+});
 
 app.get('/songs', function (req, res) {
     let query1 = ("SELECT Songs.songID, Songs.title, Songs.duration, Songs.numberOfStreams, Albums.title as album, Artists.name as artist, Genres.genreID as genre FROM Songs Inner Join Albums ON Albums.albumID = Songs.albumID INNER JOIN Artists ON Artists.artistID = Songs.artistID INNER JOIN Genres ON Genres.genreID = Songs.genreID ORDER BY Songs.songID;")

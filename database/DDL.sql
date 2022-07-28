@@ -147,7 +147,7 @@ CREATE TABLE `Playlists` (
 
 LOCK TABLES `Playlists` WRITE;
 /*!40000 ALTER TABLE `Playlists` DISABLE KEYS */;
-INSERT INTO `Playlists` VALUES (1,0,'I like Everything.','Title says it all.',0),(2,0,'Everything... but Country','Descriptions are hard to come up with.',0),(3,0,'TAKE ME HOME','... WEST VIRGINIA',0);
+INSERT INTO `Playlists` VALUES (1,0,'I like Everything.','Title says it all.',3),(2,0,'Everything... but Country','Descriptions are hard to come up with.',2),(3,0,'TAKE ME HOME','... WEST VIRGINIA',1);
 /*!40000 ALTER TABLE `Playlists` ENABLE KEYS */;
 UNLOCK TABLES;
 

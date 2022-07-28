@@ -1,0 +1,41 @@
+<head>
+    <title>Playlists</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<h1>Playlists</h1>
+
+[ <a href="genres.html">Genres</a> | <a href="artists.html">Artists</a> | <a href="songs.html">Songs</a> | <a
+    href="customers.html">Customers</a> | <a href="playlists.html">Playlists</a>| <a href="albums.html">Albums</a> ]
+
+{{!-- Create a table --}}
+<table>
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.playlistID}}</td>
+            <td>{{this.numberOfStreams}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.title}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
