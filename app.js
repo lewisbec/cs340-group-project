@@ -60,7 +60,7 @@ app.get('/songs', function (req, res) {
 });
 
 app.get('/customers', function (req, res) {
-    let query1 = ("SELECT Customers.customerID, Customers.username, Customers.password, Customers.email, Customers.isPremium FROM Customers;");
+    let query1 = ("SELECT Customers.customerID, Customers.username, Customers.password, Customers.email, IFNULL(Customers.isPremium, 0) AS 'isPremium' FROM Customers;");
 
     db.pool.query(query1, function (error, rows, fields) {
         res.render('customers', { data: rows });
