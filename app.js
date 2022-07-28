@@ -5,7 +5,9 @@
 // Express
 var express = require('express');
 var app = express();
-PORT = 9424;
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+PORT = 9022;
 
 // Database
 var db = require('./database/db-connector');
@@ -21,66 +23,46 @@ app.set('view engine', '.hbs');
 /*
     ROUTES
 */
-app.get('/', function(req, res)
-    {
-        res.render('index')
-    });
+app.get('/', function (req, res) {
+    res.render('index')
+});
 
-// // songs route
-// app.get('/songs', function(req, res)
-//     {
-//         let query1 = ("SELECT Songs.songID, Songs.title, Songs.duration, Songs.numberOfStreams, Albums.title as album, Artists.name as artist, Genres.genreID as genre FROM Songs Inner Join Albums ON Albums.albumID = Songs.albumID INNER JOIN Artists ON Artists.artistID = Songs.artistID INNER JOIN Genres ON Genres.genreID = Songs.genreID;")
-//         db.pool.query(query1, function(error, rows, fields){
-//             res.render('songs', {data: rows});
-//         })
-//     });
 
-app.get('/songs', function(req, res)
-    {
-        // Declare Query 1
-        let query1 = ("SELECT Songs.songID, Songs.title, Songs.duration, Songs.numberOfStreams, Albums.title as album, Artists.name as artist, Genres.genreID as genre FROM Songs Inner Join Albums ON Albums.albumID = Songs.albumID INNER JOIN Artists ON Artists.artistID = Songs.artistID INNER JOIN Genres ON Genres.genreID = Songs.genreID;")
-        
-        let query2 = "SELECT * FROM Albums;"
-    
-        // Run the 1st query
-        db.pool.query(query1, function(error, rows, fields){
-            
-            // Save the people
-            let songs = rows;
-            // Run the second query
-            db.pool.query(query2, (error, rows, fields) => {
-                
-                // Save the albums
-                let albums = rows;
-                console.log(albums)
-                return res.render('songs', {data: songs, albums: albums});
+app.get('/songs', function (req, res) {
+    let query1 = ("SELECT Songs.songID, Songs.title, Songs.duration, Songs.numberOfStreams, Albums.title as album, Artists.name as artist, Genres.genreID as genre FROM Songs Inner Join Albums ON Albums.albumID = Songs.albumID INNER JOIN Artists ON Artists.artistID = Songs.artistID INNER JOIN Genres ON Genres.genreID = Songs.genreID;")
+    let query2 = "SELECT * FROM Albums;"
+    let query3 = "SELECT * FROM Artists;"
+    let query4 = "SELECT * FROM Genres"
+
+    db.pool.query(query1, function (error, rows, fields) {
+        let songs = rows;
+        db.pool.query(query2, (error, rows, fields) => {
+            let albums = rows;
+            db.pool.query(query3, (error, rows, fields) => {
+                let artists = rows;
+                db.pool.query(query4, (error, rows, fields) => {
+                    let genres = rows;
+                    return res.render('songs', { data: songs, albums: albums, genres: genres, artists: artists });
+                })
             })
+
         })
-    });
+    })
+});
 
 /* 
     POST ROUTES
 */
-app.post('/add-song-form', function(req, res){
+app.post('/add-song-form', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    // Capture NULL values
-    let homeworld = parseInt(data['input-homeworld']);
-    if (isNaN(homeworld))
-    {
-        homeworld = 'NULL'
-    }
-
-    let age = parseInt(data['input-age']);
-    if (isNaN(age))
-    {
-        age = 'NULL'
-    }
+    // Capture  NULL values
+    let genre = String(data['input-genre']);
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO bsg_people (fname, lname, homeworld, age) VALUES ('${data['input-fname']}', '${data['input-lname']}', ${homeworld}, ${age})`;
-    db.pool.query(query1, function(error, rows, fields){
+    query1 = `INSERT INTO Songs (title, duration, albumID, artistID, genreID) VALUES ('${data['input-title']}', ${data['input-duration']}, ${data['input-album']}, ${data['input-artist']}, '${genre}');`;
+    db.pool.query(query1, function (error, rows, fields) {
 
         // Check to see if there was an error
         if (error) {
@@ -92,9 +74,8 @@ app.post('/add-song-form', function(req, res){
 
         // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
         // presents it on the screen
-        else
-        {
-            res.redirect('/');
+        else {
+            res.redirect('/songs');
         }
     })
 })
@@ -103,6 +84,6 @@ app.post('/add-song-form', function(req, res){
 /*
     LISTENER
 */
-app.listen(PORT, function(){
+app.listen(PORT, function () {
     console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
 });
