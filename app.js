@@ -59,6 +59,13 @@ app.get('/songs', function (req, res) {
     })
 });
 
+app.get('/customers', function (req, res) {
+    let query1 = ("SELECT Customers.customerID, Customers.username, Customers.password, Customers.email, Customers.isPremium FROM Customers;");
+
+    db.pool.query(query1, function (error, rows, fields) {
+        res.render('customers', { data: rows });
+    })
+});
 /* 
     POST ROUTES
 */
@@ -89,6 +96,42 @@ app.post('/add-song-form', function (req, res) {
     })
 })
 
+app.post('/add-customer-ajax', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+    console.log(data)
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Customers (username, password, email, isPremium) VALUES ('${data.username}', '${data.password}', '${data.email}', ${data.isPremium})`;
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            // If there was no error, perform a SELECT * on bsg_people
+            query2 = `SELECT * FROM Customers;`;
+            db.pool.query(query2, function (error, rows, fields) {
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
 
 /*
 DELETE ROUTES
@@ -111,6 +154,49 @@ app.delete('/delete-song-ajax/', function (req, res, next) {
         }
     })
 });
+
+/*
+PUT ROUTES
+*/
+app.put('/put-person-ajax', function (req, res, next) {
+    let data = req.body;
+    console.log(data)
+
+    let customerID = parseInt(data.cutomerID)
+    console.log(customerID)
+    let isPremium = parseInt(data.isPremium)
+
+    let queryUpdateWorld = `UPDATE Customers
+    SET username = ?, password = ?, email = ?, isPremium = ?
+    WHERE customerID = ?;`;
+    let selectWorld = `SELECT * FROM Customers WHERE customerID = ?`
+
+    // Run the 1st query
+    db.pool.query(queryUpdateWorld, [data.username, data.password, data.email, isPremium, customerID], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we run our second query and return that data so we can use it to update the people's
+        // table on the front-end
+        else {
+            // Run the second query
+            db.pool.query(selectWorld, [customerID], function (error, rows, fields) {
+                console.log(rows)
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
 
 /*
     LISTENER

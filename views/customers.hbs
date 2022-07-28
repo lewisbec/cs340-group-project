@@ -1,0 +1,132 @@
+{{!-- Just some plain text --}}
+
+<head>
+    <title>Customers</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<h1>Songs</h1>
+
+[ <a href="genres">Genres</a> | <a href="artists">Artists</a> | <a href="songs">Songs</a> | <a
+    href="customers">Customers</a> | <a href="playlists">Playlists</a>| <a href="albums">Albums</a> ]
+
+
+{{!-- The Data from our Database --}}
+
+{{!-- Create a table --}}
+<table id="customers-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.customerID}}</td>
+            <td>{{this.username}}</td>
+            <td>{{this.password}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.isPremium}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+
+<!-- /views/customers.hbs -->
+
+{{!-- Form to add a record to the table --}}
+<h2>Add a Customer</h2>
+<p>To add a new customer, please enter their information below and click 'Submit'!</p>
+<form id="add-customer-form-ajax">
+    <label for="input-fname">Username: </label>
+    <input type="text" name="input-fname" id="input-username">
+
+    <label for="input-lname">Password </label>: </label>
+    <input type="text" name="input-lname" id="input-password">
+
+    <label for="input-homeworld">Email: </label>
+    <input type="number" name="input-homeworld" id="input-email">
+
+    <label for="input-age">isPremium: </label>
+    <input type="number" name="input-age" id="input-isPremium">
+
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_customer.js"></script>
+
+<h2>Updating A User's HomeWorld Form</h2>
+<p>To update a specific user's homeworld select their name from the drop-down menu on the left and their desired
+    homeworld from the drop down menu on the right</p>
+<form id="update-person-form-ajax">
+
+    <label for="input-fullname">customerID: </label>
+    <select name="input-fullname" id="mySelect">
+        <option value="test">Select a Person</option>
+        {{#each data}}
+        <option value="{{this.customerID}}">{{this.customerID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-homeworld">username: </label>
+    <input name="input-homeworld" id="input-homeworld-update">
+    <label for="input-password">password: </label>
+    <input type="text" name="input-password" id="input-password-update">
+
+    <label for="input-email">email: </label>
+    <input type="text" name="input-email" id="input-email-update">
+
+    <label for="input-isPremium">isPremium: </label>
+    <input type="text" name="input-isPremium" id="input-isPremium-update">
+
+    <input type="submit">
+
+</form>
+
+<script src="./js/update_person.js"></script>
+
+
+{{!-- <h2>Update a Customer</h2>
+<p>To update a customer select their ID from the drop-down menu on the left and their updated information</p>
+<form id="update-person-form-ajax">
+
+    <label for="input-fullname">Customer ID: </label>
+    <select name="input-fullname" id="mySelect">
+        <option value="test">Select a User</option>
+        {{#each data}}
+        <option value="{{this.customerID}}">{{this.customerID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-fname">Username: </label>
+    <input type="text" name="input-fname" id="input-username-update">
+
+    <label for="input-lname">Password </label>: </label>
+    <input type="text" name="input-lname" id="input-password-update">
+
+    <label for="input-homeworld">Email: </label>
+    <input type="number" name="input-homeworld" id="input-email-update">
+
+    <label for="input-age">isPremium: </label>
+    <input type="number" name="input-age" id="input-isPremium-update">
+
+    <input type="submit">
+
+</form>
+
+<script src="./js/update_person.js"></script> --}}
