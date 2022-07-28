@@ -20,6 +20,8 @@ app.engine('.hbs', exphbs.engine({
 }));
 app.set('view engine', '.hbs');
 
+app.use(express.static(__dirname + '/public')); // this is needed to allow for the form to use the ccs style sheet
+
 /*
     ROUTES
 */
@@ -80,6 +82,28 @@ app.post('/add-song-form', function (req, res) {
     })
 })
 
+
+/*
+DELETE ROUTES
+*/
+app.delete('/delete-song-ajax/', function (req, res, next) {
+    console.log('test')
+    let data = req.body;
+    let songID = parseInt(data.songID);
+    let deleteBsg_Cert_People = `DELETE FROM Songs WHERE songID = ?`;
+    console.log('test')
+    // Run the 1st query
+    db.pool.query(deleteBsg_Cert_People, [songID], function (error, rows, fields) {
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.redirect('/');
+        }
+    })
+});
 
 /*
     LISTENER

@@ -1,0 +1,53 @@
+<html>
+
+<head>
+  <title>Artists</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <h1>Artists</h1>
+
+  [ <a href="genres.html">Genres</a> | <a href="artists.html">Artists</a> | <a href="songs.html">Songs</a> | <a
+    href="customers.html">Customers</a> | <a href="playlists.html">Playlists</a> | <a href="albums.html">Albums</a>]
+
+  <div id="browse">
+    <table border="1" cellpadding="5">
+      <tr>
+        <th>artistID</th>
+        <th>name</th>
+        <th>bio</th>
+      </tr>
+      <tr>
+        <td align="right">1</td>
+        <td>The Beatles</td>
+        <td align="right">English Band in Liverpooll</td>
+      </tr>
+      <tr>
+        <td align="right">2</td>
+        <td>Skrillex</td>
+        <td align="right">DJ who popularized dubstep</td>
+      </tr>
+      <tr>
+        <td align="right">3</td>
+        <td>John Denver</td>
+        <td align="right">American singer-songwriter</td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+  </div> <!-- browse -->
+  <div id="insert">
+    <form method="POST">
+      <legend><strong>Add Artist</strong></legend>
+      <fieldset class="fields">
+        <label> name </label> <input type="text">
+        <label> bio </label> <input type="text">
+
+      </fieldset>
+      <input class="btn" type="submit" value="Add Artist">
+    </form>
+  </div><!-- insert -->
+
+</body>
+
+</html>
