@@ -65,11 +65,7 @@ UPDATE Customers
 
 -- DELETE OPERATIONS
 -- delete a song from a playlist
-DELETE FROM Playlists_Songs WHERE
-    (
-        SELECT playlist.songID FROM Playlists_Songs
-        WHERE playlistID = :selectedPlaylist AND songID = :selectedSong
-    );
+DELETE FROM Playlists_Songs WHERE playlistID = :selectedPlaylist AND songID = :selectedSong;
 
 -- delete an entire playlist from the Playlists table, all associated entries in the Playlists_Songs table should be deleted by CASCADE
 DELETE FROM Playlists
