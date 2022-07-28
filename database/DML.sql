@@ -67,7 +67,7 @@ UPDATE Customers
 -- delete a song from a playlist
 DELETE FROM Playlists_Songs WHERE
     (
-        SELECT playlist_songID FROM Playlists_Songs
+        SELECT playlist.songID FROM Playlists_Songs
         WHERE playlistID = :selectedPlaylist AND songID = :selectedSong
     );
 
