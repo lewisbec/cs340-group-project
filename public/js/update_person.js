@@ -59,9 +59,10 @@ updatePersonForm.addEventListener("submit", function (e) {
 
 
 function updateRow(data, personID) {
+    console.log(data)
     let parsedData = JSON.parse(data);
-
-    let table = document.getElementById("people-table");
+    console.log(parsedData)
+    let table = document.getElementById("customers-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
         //iterate through rows
@@ -72,10 +73,16 @@ function updateRow(data, personID) {
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
             // Get td of homeworld value
-            let td = updateRowIndex.getElementsByTagName("td")[3];
+            let tduser = updateRowIndex.getElementsByTagName("td")[1];
+            let tdpass = updateRowIndex.getElementsByTagName("td")[2];
+            let tdemail = updateRowIndex.getElementsByTagName("td")[3];
+            let tdprem = updateRowIndex.getElementsByTagName("td")[4];
 
             // Reassign homeworld to our value we updated to
-            td.innerHTML = parsedData[0].name;
+            tduser.innerHTML = parsedData[0].username;
+            tdpass.innerHTML = parsedData[0].password;
+            tdemail.innerHTML = parsedData[0].email;
+            tdprem.innerHTML = parsedData[0].isPremium;
         }
     }
 }
