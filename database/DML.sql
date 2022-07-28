@@ -27,9 +27,9 @@ SELECT Customers.customerID, Customers.username, Customers.password, Customers.e
 
 -- playlists
 -- get all playlists and all songs within the playlist
-SELECT Playlists.name, Playlists.streams, Playlists.description, Customers.username as user FROM Playlists_Songs
-INNER JOIN Playlists on Playlists_Songs.playlistID = Playlists.playlistID
-INNER JOIN Customers on Customers.customerID = Playlists.customerID;
+SELECT Playlists.playlistID, Playlists.numberOfStreams, Playlists.name, Playlists.description, Songs.title FROM Playlists
+INNER JOIN Playlists_Songs on Playlists_Songs.playlistID = Playlists.playlistID
+INNER JOIN Songs on Playlists_Songs.songID = Songs.songID;
 
 -- filter by playlist name
 SELECT Playlists.name, Playlists.streams, Playlists.description, Customers.username FROM Playlists_Songs
@@ -65,11 +65,7 @@ UPDATE Customers
 
 -- DELETE OPERATIONS
 -- delete a song from a playlist
-DELETE FROM Playlists_Songs WHERE
-    (
-        SELECT playlist_songID FROM Playlists_Songs
-        WHERE playlistID = :selectedPlaylist AND songID = :selectedSong
-    );
+DELETE FROM Playlists_Songs WHERE playlistID = :selectedPlaylist AND songID = :selectedSong;
 
 -- delete an entire playlist from the Playlists table, all associated entries in the Playlists_Songs table should be deleted by CASCADE
 DELETE FROM Playlists
