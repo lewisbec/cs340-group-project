@@ -30,7 +30,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/playlists', function (req, res) {
-    let query1 = ("SELECT Playlists.playlistID, Playlists.numberOfStreams, Playlists.name, Playlists.description, Songs.songID, Songs.title FROM Playlists INNER JOIN Playlists_Songs on Playlists_Songs.playlistID = Playlists.playlistID INNER JOIN Songs on Playlists_Songs.songID = Songs.songID;");
+    let query1 = ("SELECT Playlists.playlistID, Playlists.numberOfStreams, Playlists.name, Playlists.description, Songs.title, Songs.songID FROM Playlists INNER JOIN Playlists_Songs on Playlists_Songs.playlistID = Playlists.playlistID INNER JOIN Songs on Playlists_Songs.songID = Songs.songID;");
 
     db.pool.query(query1, function (error, rows, fields) {
         res.render('playlists', { data: rows });
