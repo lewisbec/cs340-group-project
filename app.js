@@ -5,9 +5,9 @@
 // Express
 var express = require('express');
 var app = express();
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-PORT = 8676;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+PORT = 8678;
 
 // Database
 var db = require('./database/db-connector');
@@ -30,7 +30,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/playlists', function (req, res) {
-    let query1 = ("SELECT Playlists.playlistID, Playlists.numberOfStreams, Playlists.name, Playlists.description, Songs.title FROM Playlists INNER JOIN Playlists_Songs on Playlists_Songs.playlistID = Playlists.playlistID INNER JOIN Songs on Playlists_Songs.songID = Songs.songID;");
+    let query1 = ("SELECT Playlists.playlistID, Playlists.numberOfStreams, Playlists.name, Playlists.description, Songs.songID, Songs.title FROM Playlists INNER JOIN Playlists_Songs on Playlists_Songs.playlistID = Playlists.playlistID INNER JOIN Songs on Playlists_Songs.songID = Songs.songID;");
 
     db.pool.query(query1, function (error, rows, fields) {
         res.render('playlists', { data: rows });
@@ -152,6 +152,26 @@ app.delete('/delete-song-ajax/', function (req, res, next) {
         else {
             res.redirect('/');
         }
+    })
+});
+
+app.delete('/delete-song-from-playlist-ajax/', function (req, res, next) {
+    let data = req.body;
+    let playlistID = parseInt(data.playlistID);
+    let songID = parseInt(data.songID);
+    let deletePlaylists_Songs = `DELETE FROM Playlists_Songs WHERE playlistID = ? AND songID = ?`;
+
+    // Run the 1st query
+    db.pool.query(deletePlaylists_Songs, [playlistID, songID], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.sendStatus(204);
+        }
+
     })
 });
 

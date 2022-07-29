@@ -1,14 +1,18 @@
 <head>
     <title>Playlists</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="./js/delete_song_from_playlist.js" type="text/javascript"></script>
 </head>
+
+
 <h1>Playlists</h1>
 
 [ <a href="genres">Genres</a> | <a href="artists">Artists</a> | <a href="songs">Songs</a> | <a
     href="customers">Customers</a> | <a href="playlists">Playlists</a>| <a href="albums">Albums</a> ]
 
 {{!-- Create a table --}}
-<table>
+<table id="playlist-table">
 
     {{!-- Header section --}}
     <thead>
@@ -29,12 +33,14 @@
 
         {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
-        <tr>
+        <tr playlistid-value={{this.playlistID}} songid-value={{this.songID}}>
             <td>{{this.playlistID}}</td>
             <td>{{this.numberOfStreams}}</td>
             <td>{{this.name}}</td>
             <td>{{this.description}}</td>
+            <td>{{this.songID}}</td>
             <td>{{this.title}}</td>
+            <td><button onclick="deleteSongFromPlaylist({{this.playlistID}}, {{this.songID}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
