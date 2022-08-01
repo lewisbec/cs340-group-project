@@ -82,6 +82,22 @@ app.get('/customers', function (req, res) {
         res.render('customers', { data: rows });
     })
 });
+
+app.get('/albums', function (req, res) {
+    let query1 = ("SELECT Albums.albumID, Albums.title, Albums.description, Artists.name AS artist FROM Albums Inner JOIN Artists ON Albums.artistID = Artists.artistID;");
+    let query2 = "SELECT * FROM Artists;"
+
+    db.pool.query(query1, function (error, rows, fields) {
+        let albums = rows;
+        db.pool.query(query2, (error, rows, fields) => {
+            return res.render('albums', { data: albums, artists: rows });
+        })
+    })
+})
+
+
+
+
 /* 
     POST ROUTES
 */
@@ -165,7 +181,7 @@ app.post('/add-customer-ajax', function (req, res) {
     console.log(data)
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Customers (username, password, email, isPremium) VALUES ('${data.username}', '${data.password}', '${data.email}', ${data.isPremium})`;
+    let query1 = `INSERT INTO Customers (username, password, email, isPremium) VALUES ('${data.username}', '${data.password}', '${data.email}', ${data.isPremium})`;
     db.pool.query(query1, function (error, rows, fields) {
 
         // Check to see if there was an error
@@ -176,7 +192,7 @@ app.post('/add-customer-ajax', function (req, res) {
             res.sendStatus(400);
         }
         else {
-            // If there was no error, perform a SELECT * on bsg_people
+            // If there was no error, perform a SELECT * on Customers
             query2 = `SELECT * FROM Customers;`;
             db.pool.query(query2, function (error, rows, fields) {
 
@@ -195,6 +211,31 @@ app.post('/add-customer-ajax', function (req, res) {
         }
     })
 });
+
+app.post('/add-album-form', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    let query1 = `INSERT INTO Albums (title, description, artistID) VALUES ('${data['input-album-title']}', '${data['input-album-description']}', '${data['input-album-artist']}');`;
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route (/albums), which automatically runs the SELECT * FROM Albums and presents it on the screen.
+        else {
+            res.redirect('/albums');
+        }
+    })
+})
+
+
+
+
 
 /*
 DELETE ROUTES

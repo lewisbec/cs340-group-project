@@ -1,0 +1,51 @@
+<head>
+    <title>Albums</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<h1>Albums</h1>
+
+[ <a href="genres">Genres</a> | <a href="artists">Artists</a> | <a href="songs">Songs</a> | <a
+    href="customers">Customers</a> | <a href="playlists">Playlists</a> | <a href="albums">Albums</a> ]
+
+<table id="albums-table">
+    <thead>
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr albumid-value={{this.albumID}}>
+            <td>{{this.albumID}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.artist}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a record to the table using standard HTML forms --}}
+<h2>Adding Data using an HTML form</h2>
+<p>To add a new album, please enter its information information below and click `Submit`!</p>
+<form id="add-album-form" method="POST" action="/add-album-form">
+    <label for="input-album-title">Title: </label>
+    <input type="text" name="input-album-title" id="input-album-title-html">
+
+    <label for="input-album-description">Description: </label>
+    <input type="text" name="input-album-description" id="input-album-description-html">
+
+    <label for="input-album-artist">Artist: </label>
+    <select name="input-album-artist" id="input-album-artist-html">
+        <option value="">Select an Artist</option>
+        {{#each artists}}
+        <option value="{{this.artistID}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+    <input type="submit">
+</form>

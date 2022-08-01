@@ -11,7 +11,7 @@ SELECT * from Artists;
 -- albums
 -- get all albums and the corresponding artist
 SELECT Albums.albumID, Albums.title, Albums.description, Artists.name AS artist FROM Albums
-Inner JOIN Artists ON Albums.albumID = Artists.artistID;
+Inner JOIN Artists ON Albums.artistID = Artists.artistID;
 
 -- songs
 -- get all songs, the corresponding artist, genre, and album
