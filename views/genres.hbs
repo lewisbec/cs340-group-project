@@ -1,0 +1,34 @@
+<head>
+    <title>Genres</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<h1>Genres</h1>
+
+[ <a href="genres">Genres</a> | <a href="artists">Artists</a> | <a href="songs">Songs</a> | <a
+    href="customers">Customers</a> | <a href="playlists">Playlists</a> | <a href="albums">Albums</a> ]
+
+<table id="genres-table">
+    <thead>
+        <tr>
+            <th>genreID</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr genreid-value={{this.genreID}}>
+            <td>{{this.genreID}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a record to the table using standard HTML forms --}}
+<h2>Adding Data using an HTML form</h2>
+<p>To add a new genre, please enter its name (also known as its genreID) below and click `Submit`!</p>
+<form id="add-genre-form" method="POST" action="/add-genre-form">
+    <label for="input-genreID">Genre: </label>
+    <input type="text" name="input-genreID" id="input-genre-html">
+
+    <input type="submit">
+</form>

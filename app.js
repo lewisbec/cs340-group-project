@@ -7,7 +7,7 @@ var express = require('express');
 var app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-PORT = 8678;
+PORT = 8679;
 
 // Database
 var db = require('./database/db-connector');
@@ -27,6 +27,14 @@ app.use(express.static(__dirname + '/public')); // this is needed to allow for t
 */
 app.get('/', function (req, res) {
     res.render('index')
+});
+
+app.get('/genres', function (req, res) {
+    let query1 = ("SELECT Genres.genreID FROM Genres;");
+
+    db.pool.query(query1, function (error, rows, fields) {
+        res.render('genres', { data: rows });
+    })
 });
 
 app.get('/playlists', function (req, res) {
@@ -69,6 +77,29 @@ app.get('/customers', function (req, res) {
 /* 
     POST ROUTES
 */
+app.post('/add-genre-form', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    let query1 = `INSERT INTO Genres (genreID) VALUES ('${data['input-genreID']}' );`;
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Check to see if there is an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route, which automatically repopulates the table with our SELECT * FROM Genres and presents it to the screen.
+        else {
+            res.redirect('/genres');
+        }
+    })
+})
+
 app.post('/add-song-form', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
@@ -84,11 +115,11 @@ app.post('/add-song-form', function (req, res) {
         if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
+            console.log(error);
             res.sendStatus(400);
         }
 
-        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM Genres and
         // presents it on the screen
         else {
             res.redirect('/songs');
