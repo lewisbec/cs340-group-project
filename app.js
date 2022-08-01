@@ -37,6 +37,14 @@ app.get('/genres', function (req, res) {
     })
 });
 
+app.get('/artists', function (req, res) {
+    let query1 = ("SELECT * from Artists;");
+
+    db.pool.query(query1, function (error, rows, fields) {
+        res.render('artists', { data: rows });
+    })
+})
+
 app.get('/playlists', function (req, res) {
     let query1 = ("SELECT Playlists.playlistID, Playlists.numberOfStreams, Playlists.name, Playlists.description, Songs.title, Songs.songID FROM Playlists INNER JOIN Playlists_Songs on Playlists_Songs.playlistID = Playlists.playlistID INNER JOIN Songs on Playlists_Songs.songID = Songs.songID;");
 
@@ -96,6 +104,30 @@ app.post('/add-genre-form', function (req, res) {
         // If there was no error, we redirect back to our root route, which automatically repopulates the table with our SELECT * FROM Genres and presents it to the screen.
         else {
             res.redirect('/genres');
+        }
+    })
+})
+
+app.post('/add-artist-form', function (req, res) {
+
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    let query1 = `INSERT INTO Artists (name, bio) VALUES ('${data['input-artist-name']}', '${data['input-artist-bio']}');`;
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Check to see if there is an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route (/artists), which automatically repopulates the table with out SELECT * FROM Artists and presents it to the screen.
+        else {
+            res.redirect('/artists');
         }
     })
 })

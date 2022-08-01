@@ -1,0 +1,43 @@
+<head>
+    <title>Artists</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<h1>Artists</h1>
+
+[ <a href="genres">Genres</a> | <a href="artists">Artists</a> | <a href="songs">Songs</a> | <a
+    href="customers">Customers</a> | <a href="playlists">Playlists</a> | <a href="albums">Albums</a> ]
+
+<table id="artists-table">
+    <thead>
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr genreid-value={{this.genreID}}>
+            <td>{{this.artistID}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.bio}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a record to the table using standard HTML forms --}}
+<h2>Adding Data using an HTML form</h2>
+<p>To add a new artist, please enter their name and any biography information below and click `Submit`!</p>
+<form id="add-artist-form" method="POST" action="/add-artist-form">
+    <label for="input-artist-name">Name: </label>
+    <input type="text" name="input-artist-name" id="input-name-html">
+
+    <label for="input-arist-bio">Bio: </label>
+    <input type="text" name="input-artist-bio" id="input-bio-html">
+
+    <input type="submit">
+</form>
