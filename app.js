@@ -22,6 +22,8 @@ app.set('view engine', '.hbs');
 
 app.use(express.static(__dirname + '/public')); // this is needed to allow for the form to use the ccs style sheet
 
+
+
 /*
     ROUTES
 */
@@ -47,9 +49,22 @@ app.get('/artists', function (req, res) {
 
 app.get('/playlists', function (req, res) {
     let query1 = ("SELECT Playlists.playlistID, Playlists.numberOfStreams, Playlists.name, Playlists.description, Songs.title, Songs.songID FROM Playlists INNER JOIN Playlists_Songs on Playlists_Songs.playlistID = Playlists.playlistID INNER JOIN Songs on Playlists_Songs.songID = Songs.songID;");
+    let query2 = "SELECT * FROM Customers;";
+    let query3 = "SELECT * FROM Playlists;";
+    let query4 = "SELECT * FROM Songs;";
 
     db.pool.query(query1, function (error, rows, fields) {
-        res.render('playlists', { data: rows });
+        let playlists_songs = rows;
+        db.pool.query(query2, (error, rows, fields) => {
+            let customers = rows;
+            db.pool.query(query3, (error, rows, fields) => {
+                let playlists_only = rows;
+                db.pool.query(query4, (error, rows, fields) => {
+                    let songs = rows;
+                    return res.render('playlists', { data: playlists_songs, customers: customers, playlists_only: playlists_only, songs: songs });
+                })
+            })
+        })
     })
 });
 
@@ -94,7 +109,6 @@ app.get('/albums', function (req, res) {
         })
     })
 })
-
 
 
 
@@ -212,6 +226,50 @@ app.post('/add-customer-ajax', function (req, res) {
     })
 });
 
+// Add a new Playlist to the database.
+app.post('/add-playlist-form', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    let query1 = `INSERT INTO Playlists (name, description, customerID) VALUES ('${data['input-new_playlist-name']}', '${data['input-new_playlist-description']}', '${data['input-new_playlist-customer']}');`;
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route (/playlists), which automatically runs the SELECT * FROM Playlists and presents it on the screen.
+        else {
+            res.redirect('/playlists');
+        }
+    })
+})
+
+// Add a song to an existing playlist.
+app.post('/add-song_to_playlist-form', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    let query1 = `INSERT INTO Playlists_Songs (playlistID, songID) VALUES ('${data['input-existing_playlist-playlistid']}', '${data['input-existing_playlist-songid']}');`;
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route (/playlists), which automatically runs the SELECT * FROM Playlists and presents it on the screen.
+        else {
+            res.redirect('/playlists');
+        }
+    })
+})
+// Add an album to the database.
 app.post('/add-album-form', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
@@ -232,8 +290,6 @@ app.post('/add-album-form', function (req, res) {
         }
     })
 })
-
-
 
 
 
@@ -278,6 +334,8 @@ app.delete('/delete-song-from-playlist-ajax/', function (req, res, next) {
 
     })
 });
+
+
 
 /*
 PUT ROUTES

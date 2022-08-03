@@ -3,6 +3,7 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="./js/delete_song_from_playlist.js" type="text/javascript"></script>
+    <script src="./js/filter_playlists.js" type="text/javascript"></script>
 </head>
 
 
@@ -29,7 +30,26 @@
 
     {{!-- Body section --}}
     <tbody>
-
+        <tr>
+            <td>
+                <input type="text" id="playlistID-filter"
+                    onkeyup="filterPlaylist(document.getElementById('playlistID-filter'))">
+            </td>
+            <td>
+                <input type="text" id="streams-filter"
+                    onkeyup="filterPlaylist(document.getElementById('streams-filter'))">
+            </td>
+            <td>
+                <input type="text" id="name-filter" onkeyup="filterPlaylist(document.getElementById('name-filter'))">
+            </td>
+            <td>
+                <input type="text" id="description-filter"
+                    onkeyup="filterPlaylist(document.getElementById('description-filter'))">
+            </td>
+            <td>
+                <input type="text" id="song-filter" onkeyup="filterPlaylist(document.getElementById('song-filter'))">
+            </td>
+        </tr>
         {{#each data}}
         <tr playlistid-value={{this.playlistID}} songid-value={{this.songID}}>
             <td>{{this.playlistID}}</td>
@@ -42,3 +62,45 @@
         {{/each}}
     </tbody>
 </table>
+
+{{!-- Form to add a record to the table using standard HTML forms --}}
+<h2>Adding Data using an HTML form</h2>
+<p>To add a new playlist, please enter its name, a short description (optional), and the customer associated with the
+    playlist below and click `Submit`!</p>
+<form id="add-playlist-form" method="POST" action="/add-playlist-form">
+    <label for="input-new_playlist-name">Name: </label>
+    <input type="text" name="input-new_playlist-name" id="input-new_playlist-name-html">
+
+    <label for="input-new_playlist-description">Description: </label>
+    <input type="text" name="input-new_playlist-description" id="input-new_playlist-description-html">
+
+    <label for="input-new_playlist-customer">Customer: </label>
+    <select name="input-new_playlist-customer" id="input-new_playlist-customer-html">
+        <option value="">Select a Customer</option>
+        {{#each customers}}
+        <option value="{{this.customerID}}">{{this.username}}</option>
+        {{/each}}
+    </select>
+    <input type="submit">
+</form>
+
+<p>To add a song to an existing playlist, please select the playlist and song below and click `Submit`!</p>
+<form id="add-song_to_playlist-form" method="POST" action="/add-song_to_playlist-form">
+    <label for="input-existing_playlist-playlistid">Playlist: </label>
+    <select name="input-existing_playlist-playlistid" id="input-existing_playlist-name-html">
+        <option value="">Select a Playlist</option>
+        {{#each playlists_only}}
+        <option value="{{this.playlistID}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-existing_playlist-songid">Song: </label>
+    <select name="input-existing_playlist-songid" id="input-existing_playlist-song-html">
+        <option value="">Select a Song</option>
+        {{#each songs}}
+        <option value="{{this.songID}}">{{this.title}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit">
+</form>
