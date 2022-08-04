@@ -69,7 +69,7 @@ app.get('/playlists', function (req, res) {
 });
 
 app.get('/songs', function (req, res) {
-    let query1 = ("SELECT Songs.songID, Songs.title, Songs.duration, Songs.numberOfStreams, Albums.title as album, Artists.name as artist, Genres.genreID as genre FROM Songs Inner Join Albums ON Albums.albumID = Songs.albumID INNER JOIN Artists ON Artists.artistID = Songs.artistID INNER JOIN Genres ON Genres.genreID = Songs.genreID ORDER BY Songs.songID;")
+    let query1 = ("SELECT Songs.songID, Songs.title, Songs.duration, Songs.numberOfStreams, Albums.title as album, Artists.name as artist, Songs.genreID as genre FROM Songs Inner Join Albums ON Albums.albumID = Songs.albumID INNER JOIN Artists ON Artists.artistID = Songs.artistID ORDER BY Songs.songID;")
     let query2 = "SELECT * FROM Albums;"
     let query3 = "SELECT * FROM Artists;"
     let query4 = "SELECT * FROM Genres"
@@ -192,7 +192,6 @@ app.post('/add-song-form', function (req, res) {
 app.post('/add-customer-ajax', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
-    console.log(data)
 
     // Create the query and run it on the database
     let query1 = `INSERT INTO Customers (username, password, email, isPremium) VALUES ('${data.username}', '${data.password}', '${data.email}', ${data.isPremium})`;
@@ -379,6 +378,45 @@ app.put('/put-person-ajax', function (req, res, next) {
     })
 });
 
+
+app.put('/put-song-ajax', function (req, res, next) {
+    let data = req.body;
+    console.log(data)
+
+    let songID = parseInt(data.songID)
+    console.log(songID)
+
+    let queryUpdateWorld = `
+    UPDATE Songs
+    SET genreID = NULL
+    WHERE songID = ?;`
+    let query1 = (`SELECT Songs.songID, Songs.title, Songs.duration, Songs.numberOfStreams, Albums.title as album, Artists.name as artist, Songs.genreID as genre FROM Songs Inner Join Albums ON Albums.albumID = Songs.albumID INNER JOIN Artists ON Artists.artistID = Songs.artistID ORDER BY Songs.songID;`)
+
+    // Run the 1st query
+    db.pool.query(queryUpdateWorld, [songID], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we run our second query and return that data so we can use it to update the people's
+        // table on the front-end
+        else {
+            // Run the second query
+            db.pool.query(query1, [songID], function (error, rows, fields) {
+                console.log(rows)
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
 
 /*
     LISTENER

@@ -49,7 +49,7 @@
 
 
 {{!-- Form to add a record to the table using standard HTML forms --}}
-<h2>Adding Data using an HTML form</h2>
+<h2>Add a Song</h2>
 <p>To add a new song, please enter their information below and click `Submit`!</p>
 <form id="add-song-form" method="POST" action="/add-song-form">
     <label for="input-title">Title: </label>
@@ -84,3 +84,20 @@
 
     <input type="submit">
 </form>
+
+
+<h2>Set a Genre to be Null</h2>
+<p>Select the song to remove genre of.</p>
+<form id="update-song-form-ajax">
+
+    <label for="input-fullname">songName: </label>
+    <select name="input-fullname" id="mySelect">
+        <option value="test">Select the Song</option>
+        {{#each data}}
+        <option value="{{this.songID}}">{{this.title}}</option>
+        {{/each}}
+    </select>
+    <input type="submit">
+
+</form>
+<script src="./js/remove_genre.js"></script>
