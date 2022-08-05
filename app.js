@@ -31,6 +31,7 @@ app.get('/', function (req, res) {
     res.render('index')
 });
 
+// Renders Genre page, querying database to display all Genres as their genreID.
 app.get('/genres', function (req, res) {
     let query1 = ("SELECT Genres.genreID FROM Genres;");
 
@@ -39,6 +40,7 @@ app.get('/genres', function (req, res) {
     })
 });
 
+// Renders the Artists page, querying the database to display all properties of all artists in the table.
 app.get('/artists', function (req, res) {
     let query1 = ("SELECT * from Artists;");
 
@@ -47,6 +49,7 @@ app.get('/artists', function (req, res) {
     })
 })
 
+// Renders the Playlists page, querying the database to display all playlists with the songs within the applicable playlists.
 app.get('/playlists', function (req, res) {
     let query1 = ("SELECT Playlists.playlistID, Playlists.numberOfStreams, Playlists.name, Playlists.description, Songs.title, Songs.songID FROM Playlists INNER JOIN Playlists_Songs on Playlists_Songs.playlistID = Playlists.playlistID INNER JOIN Songs on Playlists_Songs.songID = Songs.songID;");
     let query2 = "SELECT * FROM Customers;";
@@ -68,6 +71,7 @@ app.get('/playlists', function (req, res) {
     })
 });
 
+// Renders the Songs page, querying the database to display all songs and their associated albums and artists in the table.
 app.get('/songs', function (req, res) {
     let query1 = ("SELECT Songs.songID, Songs.title, Songs.duration, Songs.numberOfStreams, Albums.title as album, Artists.name as artist, Songs.genreID as genre FROM Songs Inner Join Albums ON Albums.albumID = Songs.albumID INNER JOIN Artists ON Artists.artistID = Songs.artistID ORDER BY Songs.songID;")
     let query2 = "SELECT * FROM Albums;"
@@ -90,6 +94,7 @@ app.get('/songs', function (req, res) {
     })
 });
 
+// Renders the Customers page, querying the database to display all customers in the table.
 app.get('/customers', function (req, res) {
     let query1 = ("SELECT Customers.customerID, Customers.username, Customers.password, Customers.email, IFNULL(Customers.isPremium, 0) AS 'isPremium' FROM Customers;");
 
@@ -98,6 +103,7 @@ app.get('/customers', function (req, res) {
     })
 });
 
+// Renders the Albums page, querying the database to dispaly all albums and their associated artist in the table.
 app.get('/albums', function (req, res) {
     let query1 = ("SELECT Albums.albumID, Albums.title, Albums.description, Artists.name AS artist FROM Albums Inner JOIN Artists ON Albums.artistID = Artists.artistID;");
     let query2 = "SELECT * FROM Artists;"
@@ -115,6 +121,8 @@ app.get('/albums', function (req, res) {
 /* 
     POST ROUTES
 */
+
+// Adds a genre to the Genres table based on user input.
 app.post('/add-genre-form', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
@@ -138,6 +146,7 @@ app.post('/add-genre-form', function (req, res) {
     })
 })
 
+// Adds an artist to the Artists table based on user input.
 app.post('/add-artist-form', function (req, res) {
 
     // Capture the incoming data and parse it back to a JS object
@@ -162,6 +171,7 @@ app.post('/add-artist-form', function (req, res) {
     })
 })
 
+// Adds a song to the Songs table based on user input.
 app.post('/add-song-form', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
@@ -189,6 +199,7 @@ app.post('/add-song-form', function (req, res) {
     })
 })
 
+// Adds a customer to the Customers table based on user input.
 app.post('/add-customer-ajax', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
@@ -225,7 +236,7 @@ app.post('/add-customer-ajax', function (req, res) {
     })
 });
 
-// Add a new Playlist to the database.
+// Adds a playlist to the Playlist table based on user input.
 app.post('/add-playlist-form', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
@@ -247,7 +258,7 @@ app.post('/add-playlist-form', function (req, res) {
     })
 })
 
-// Add a song to an existing playlist.
+// Adds a song to an existing playlist based on user input by adding an entry in the Playlists_Songs table.
 app.post('/add-song_to_playlist-form', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
@@ -268,7 +279,8 @@ app.post('/add-song_to_playlist-form', function (req, res) {
         }
     })
 })
-// Add an album to the database.
+
+// Add an album to the Albums table based on user input.
 app.post('/add-album-form', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
@@ -295,6 +307,8 @@ app.post('/add-album-form', function (req, res) {
 /*
 DELETE ROUTES
 */
+
+// Delete a song from the Songs table based on user input.
 app.delete('/delete-song-ajax/', function (req, res, next) {
     console.log('test')
     let data = req.body;
@@ -314,6 +328,7 @@ app.delete('/delete-song-ajax/', function (req, res, next) {
     })
 });
 
+// Deletes a song from the Playlists_Songs table based on user input.
 app.delete('/delete-song-from-playlist-ajax/', function (req, res, next) {
     let data = req.body;
     let playlistID = parseInt(data.playlistID);
@@ -339,6 +354,8 @@ app.delete('/delete-song-from-playlist-ajax/', function (req, res, next) {
 /*
 PUT ROUTES
 */
+
+// Updates a customer in the Customers table based on user input.
 app.put('/put-person-ajax', function (req, res, next) {
     let data = req.body;
     console.log(data)
@@ -378,7 +395,7 @@ app.put('/put-person-ajax', function (req, res, next) {
     })
 });
 
-
+// Updates a song in the Songs table based on user input.
 app.put('/put-song-ajax', function (req, res, next) {
     let data = req.body;
     console.log(data)

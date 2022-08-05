@@ -13,9 +13,6 @@ updatePersonForm.addEventListener("submit", function (e) {
     // Get the values from the form fields
     let fullNameValue = inputFullName.value;
 
-    // currently the database table for bsg_people does not allow updating values to NULL
-    // so we must abort if being bassed NULL for homeworld
-
     // Put our data we want to send in a javascript object
     let data = {
         songID: fullNameValue
@@ -56,7 +53,7 @@ function updateRow(data, personID) {
         //rows would be accessed using the "row" variable assigned in the for loop
         if (table.rows[i].getAttribute("data-value") == personID) {
 
-            // Get the location of the row where we found the matching person ID
+            // Get the location of the row where we found the matching customer ID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
             // Get td of homeworld value
@@ -65,7 +62,7 @@ function updateRow(data, personID) {
             let tdemail = updateRowIndex.getElementsByTagName("td")[3];
             let tdprem = updateRowIndex.getElementsByTagName("td")[4];
 
-            // Reassign homeworld to our value we updated to
+            // Reassign the customer to our value we updated to
             tduser.innerHTML = parsedData[0].username;
             tdpass.innerHTML = parsedData[0].password;
             tdemail.innerHTML = parsedData[0].email;
