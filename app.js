@@ -225,7 +225,9 @@ app.post('/add-customer-ajax', function (req, res) {
 
                     // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
                     console.log(error);
+                    res.render('/customers')
                     res.sendStatus(400);
+
                 }
                 // If all went well, send the results of the query back.
                 else {
@@ -386,6 +388,7 @@ app.put('/put-person-ajax', function (req, res, next) {
                 console.log(rows)
                 if (error) {
                     console.log(error);
+                    res.redirect('/customers')
                     res.sendStatus(400);
                 } else {
                     res.send(rows);
