@@ -389,7 +389,6 @@ app.put('/put-person-ajax', function (req, res, next) {
                 if (error) {
                     console.log(error);
                     res.redirect('/customers')
-                    res.sendStatus(400);
                 } else {
                     res.send(rows);
                 }
@@ -401,10 +400,8 @@ app.put('/put-person-ajax', function (req, res, next) {
 // Updates a song in the Songs table based on user input.
 app.put('/put-song-ajax', function (req, res, next) {
     let data = req.body;
-    console.log(data)
 
     let songID = parseInt(data.songID)
-    console.log(songID)
 
     let queryUpdateWorld = `
     UPDATE Songs
@@ -426,12 +423,11 @@ app.put('/put-song-ajax', function (req, res, next) {
         else {
             // Run the second query
             db.pool.query(query1, [songID], function (error, rows, fields) {
-                console.log(rows)
                 if (error) {
                     console.log(error);
                     res.sendStatus(400);
                 } else {
-                    res.send(rows);
+                    res.redirect('/songs')
                 }
             })
         }

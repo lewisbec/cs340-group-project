@@ -1,8 +1,8 @@
 // Get the objects we need to modify
-let updatePersonForm = document.getElementById('update-song-form-ajax');
+let updateSongGenre = document.getElementById('update-song-form-ajax');
 
 // Modify the objects we need
-updatePersonForm.addEventListener("submit", function (e) {
+updateSongGenre.addEventListener("submit", function (e) {
 
     // Prevent the form from submitting
     e.preventDefault();
@@ -43,9 +43,7 @@ updatePersonForm.addEventListener("submit", function (e) {
 
 
 function updateRow(data, personID) {
-    console.log(data)
     let parsedData = JSON.parse(data);
-    console.log(parsedData)
     let table = document.getElementById("customers-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
