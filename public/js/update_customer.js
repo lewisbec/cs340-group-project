@@ -8,27 +8,23 @@ updatePersonForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputFullName = document.getElementById("mySelect");
-    let inputHomeworld = document.getElementById("input-homeworld-update");
+    let inputCustomerID = document.getElementById("mySelect");
+    let inputUsername = document.getElementById("input-username-update");
     let inputPassword = document.getElementById("input-password-update")
     let inputEmail = document.getElementById("input-email-update")
     let inputIsPremium = document.getElementById("input-isPremium-update")
 
     // Get the values from the form fields
-    let fullNameValue = inputFullName.value;
-    let homeworldValue = inputHomeworld.value;
+    let customerIDValue = inputCustomerID.value;
+    let usernameValue = inputUsername.value;
     let password = inputPassword.value;
     let email = inputEmail.value
     let isPremium = inputIsPremium.value
 
 
-    // currently the database table for bsg_people does not allow updating values to NULL
-    // so we must abort if being bassed NULL for homeworld
-
-    // Put our data we want to send in a javascript object
     let data = {
-        cutomerID: fullNameValue,
-        username: homeworldValue,
+        cutomerID: customerIDValue,
+        username: usernameValue,
         password: password,
         email: email,
         isPremium: isPremium
@@ -44,7 +40,7 @@ updatePersonForm.addEventListener("submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            updateRow(xhttp.response, fullNameValue);
+            updateRow(xhttp.response, customerIDValue);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -65,20 +61,15 @@ function updateRow(data, personID) {
     let table = document.getElementById("customers-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
-        //iterate through rows
-        //rows would be accessed using the "row" variable assigned in the for loop
         if (table.rows[i].getAttribute("data-value") == personID) {
 
-            // Get the location of the row where we found the matching person ID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
-            // Get td of homeworld value
             let tduser = updateRowIndex.getElementsByTagName("td")[1];
             let tdpass = updateRowIndex.getElementsByTagName("td")[2];
             let tdemail = updateRowIndex.getElementsByTagName("td")[3];
             let tdprem = updateRowIndex.getElementsByTagName("td")[4];
 
-            // Reassign homeworld to our value we updated to
             tduser.innerHTML = parsedData[0].username;
             tdpass.innerHTML = parsedData[0].password;
             tdemail.innerHTML = parsedData[0].email;
