@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `Albums`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Albums` (
   `albumID` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(45) DEFAULT NULL,
+  `title` varchar(45) NOT NULL,
   `description` text NOT NULL,
   `artistID` int(11) NOT NULL,
   PRIMARY KEY (`albumID`),
